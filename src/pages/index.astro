@@ -5,9 +5,9 @@ const researchAreas = [
   {
     id: "01",
     signal: "DELIBERATION",
-    title: "Slow Thinking for LLMs",
+    title: "Deep Thinking for LLMs",
     description:
-      "Building language models that pause, test alternatives, and revise their own reasoning before they act.",
+      "Building language models that spend more time reasoning, test alternatives, and revise their judgment before they act.",
     question: "How can inference become a process of judgment?",
     tag: "Reasoning systems",
   },
@@ -50,20 +50,21 @@ const projects = [
     themes: ["Red teaming", "Deliberation", "Evaluation"],
   },
   {
-    code: "ST / 02",
-    title: "Slow Thinking Systems",
+    code: "DT / 02",
+    title: "Deep Thinking · MCGS Law",
     state: "IN STUDY",
     description:
-      "Mechanisms for giving language models a second look: decomposing hard decisions, allocating test-time compute, and revising premature answers.",
-    themes: ["Reasoning", "Test-time compute", "Self-correction"],
+      "A deep-thinking framework that gives language models more time to decompose hard decisions, search game-theoretic alternatives, and revise premature answers.",
+    themes: ["Deep reasoning", "Test-time compute", "Game-theoretic search"],
   },
   {
-    code: "CS / 03",
-    title: "MCGS Law",
-    state: "ONGOING",
+    code: "CG / 03",
+    title: "ContractGalaxy",
+    state: "DEMO",
     description:
-      "A computational social simulation exploring how rules, incentives, and model-generated behavior interact inside evolving agent communities.",
-    themes: ["Game theory", "Institutions", "Agent societies"],
+      "An interactive contract-intelligence system that maps clauses, obligations, and risks into an explorable galaxy of relationships.",
+    themes: ["Contract intelligence", "Knowledge graphs", "Interactive reasoning"],
+    video: "contract-galaxy-demo.mp4",
   },
   {
     code: "HI / 04",
@@ -80,7 +81,7 @@ const experience = [
     years: "2026—NOW",
     organization: "HKUST",
     role: "PhD Researcher · Artificial Intelligence",
-    note: "Slow thinking, game theory, HCI, and computational social science.",
+    note: "Deep thinking, game theory, HCI, and computational social science.",
   },
   {
     years: "2025—NOW",
@@ -107,6 +108,7 @@ const assetBase = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const avatarImage = `${assetBase}avatar.jpg`;
+const contractGalaxyVideo = `${assetBase}contract-galaxy-demo.mp4`;
 const socialImage = new URL(`${assetBase}og.png`, Astro.url);
 ---
 
@@ -117,7 +119,7 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="Chen Long is an AI PhD researcher at HKUST working on LLM slow thinking, AI safety, computational sociology, and more-than-human interaction."
+      content="Chen Long is an AI PhD researcher at HKUST working on LLM deep thinking, AI safety, computational sociology, and more-than-human interaction."
     />
     <meta name="theme-color" content="#f2efe6" />
     <meta property="og:type" content="website" />
@@ -244,7 +246,24 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
 
         <div class="project-grid">
           {projects.map((project, index) => (
-            <article class="project-card reveal" style={`--delay: ${index * 70}ms`}>
+            <article
+              class:list={["project-card", "reveal", { "project-card--video": project.video }]}
+              style={`--delay: ${index * 70}ms`}
+              tabindex={project.video ? "0" : undefined}
+              data-video-card={project.video ? "" : undefined}
+              aria-label={project.video ? `${project.title}. Hover, focus, or tap to play the demo.` : undefined}
+            >
+              {project.video && (
+                <video
+                  class="project-video"
+                  src={contractGalaxyVideo}
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  aria-hidden="true"
+                ></video>
+              )}
               <div class="project-meta">
                 <span>{project.code}</span>
                 <span class="project-state"><i></i>{project.state}</span>
@@ -254,6 +273,12 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
               <ul aria-label={`${project.title} themes`}>
                 {project.themes.map((theme) => <li>{theme}</li>)}
               </ul>
+              {project.video && (
+                <>
+                  <span class="project-play-hint" aria-hidden="true">HOVER / FOCUS / TAP TO PLAY ↗</span>
+                  <span class="video-now-playing" aria-hidden="true">CONTRACTGALAXY · PLAYING</span>
+                </>
+              )}
             </article>
           ))}
         </div>
@@ -352,6 +377,43 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
       );
 
       document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+
+      document.querySelectorAll<HTMLElement>("[data-video-card]").forEach((card) => {
+        const video = card.querySelector<HTMLVideoElement>(".project-video");
+        if (!video) return;
+
+        const activate = () => {
+          card.classList.add("is-video-active");
+          void video.play().catch(() => {
+            card.classList.remove("is-video-active");
+          });
+        };
+
+        const deactivate = () => {
+          card.classList.remove("is-video-active");
+          video.pause();
+          video.currentTime = 0;
+        };
+
+        card.addEventListener("mouseenter", activate);
+        card.addEventListener("mouseleave", deactivate);
+        card.addEventListener("focus", () => {
+          if (card.matches(":focus-visible")) activate();
+        });
+        card.addEventListener("blur", deactivate);
+        card.addEventListener("click", () => {
+          if (!window.matchMedia("(hover: none)").matches) return;
+          if (card.classList.contains("is-video-active")) deactivate();
+          else activate();
+        });
+        card.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          if (card.classList.contains("is-video-active")) deactivate();
+          else activate();
+        });
+      });
+
       window.addEventListener("scroll", updateScroll, { passive: true });
       updateScroll();
     </script>
