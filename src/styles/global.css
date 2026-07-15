@@ -1160,8 +1160,22 @@ footer a {
 
   .education-note { margin-top: 14px; }
 
+  .trajectory.section-pad {
+    padding-bottom: 48px;
+  }
+
+  .contact {
+    padding-top: 72px;
+  }
+
+  .contact-mark {
+    display: none;
+  }
+
   .contact h2 {
-    font-size: clamp(54px, 17vw, 88px);
+    font-size: clamp(50px, 15vw, 72px);
+    letter-spacing: -0.055em;
+    line-height: 0.9;
   }
 
   .contact-note {
@@ -1169,8 +1183,10 @@ footer a {
   }
 
   .contact-email {
+    gap: 12px;
     margin-top: 52px;
-    font-size: 14px;
+    font-size: 13px;
+    overflow-wrap: anywhere;
   }
 
   footer {
