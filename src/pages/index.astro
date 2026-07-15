@@ -154,7 +154,7 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
         <a href="#projects">Projects</a>
         <a href="#trajectory">Trajectory</a>
         <a href={cvFile} download="Chen-Long-CV.pdf" aria-label="Download Chen Long's CV as a PDF">CV ↓</a>
-        <a class="nav-contact" href="mailto:lchenew@connect.ust.hk">Let’s talk ↗</a>
+        <a class="nav-contact" href="mailto:lchenew@connect.ust.hk" data-email-link aria-label="Copy email address">Let’s talk ↗</a>
       </nav>
     </header>
 
@@ -179,7 +179,7 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
           <div class="hero-links reveal">
             <a class="primary-link" href="#research">Explore the research <span>↓</span></a>
             <a href="https://github.com/chenqianwan" target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a href="mailto:lchenew@connect.ust.hk">Email ↗</a>
+            <a href="mailto:lchenew@connect.ust.hk" data-email-link aria-label="Copy email address">Email ↗</a>
           </div>
         </div>
 
@@ -325,7 +325,7 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
           I’m interested in research collaborations, unusual HCI questions, and
           conversations across technical and social boundaries.
         </p>
-        <a class="contact-email reveal" href="mailto:lchenew@connect.ust.hk">
+        <a class="contact-email reveal" href="mailto:lchenew@connect.ust.hk" data-email-link aria-label="Copy email address">
           <span>lchenew@connect.ust.hk</span><i>↗</i>
         </a>
       </section>
@@ -339,6 +339,8 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
         <a href="#top">BACK TO TOP ↑</a>
       </div>
     </footer>
+
+    <div class="email-toast" data-email-toast role="status" aria-live="polite"></div>
 
     <script>
       const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
@@ -379,6 +381,39 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
       );
 
       document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+
+      const emailToast = document.querySelector<HTMLElement>("[data-email-toast]");
+      let emailToastTimer: number | undefined;
+
+      const copyEmail = async (email: string) => {
+        try {
+          await navigator.clipboard.writeText(email);
+          return true;
+        } catch {
+          window.prompt("Copy email address:", email);
+          return false;
+        }
+      };
+
+      document.querySelectorAll<HTMLAnchorElement>("[data-email-link]").forEach((link) => {
+        link.addEventListener("click", async (event) => {
+          event.preventDefault();
+          const email = link.getAttribute("href")?.replace(/^mailto:/, "");
+          if (!email || !emailToast) return;
+
+          emailToast.textContent = `COPYING EMAIL · ${email}`;
+          emailToast.classList.add("is-visible");
+          window.clearTimeout(emailToastTimer);
+          emailToastTimer = window.setTimeout(() => {
+            emailToast.classList.remove("is-visible");
+          }, 2600);
+
+          const copied = await copyEmail(email);
+          emailToast.textContent = copied
+            ? `EMAIL COPIED · ${email}`
+            : `EMAIL · ${email}`;
+        });
+      });
 
       document.querySelectorAll<HTMLElement>("[data-video-card]").forEach((card) => {
         const video = card.querySelector<HTMLVideoElement>(".project-video");
