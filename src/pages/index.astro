@@ -133,7 +133,9 @@ const socialImage = new URL("/og.png", Astro.url);
 
     <header class="site-header" data-header>
       <a class="wordmark" href="#top" aria-label="Chen Long, home">
-        <span>CL</span>
+        <span class="wordmark-avatar" aria-hidden="true">
+          <img src="/avatar.jpg" alt="" width="42" height="42" />
+        </span>
         <span class="wordmark-copy">CHEN LONG<br />陈 龙</span>
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
@@ -178,7 +180,9 @@ const socialImage = new URL("/og.png", Astro.url);
           <div class="map-orbit orbit-two"></div>
           <span class="map-axis axis-x"></span>
           <span class="map-axis axis-y"></span>
-          <div class="map-center"><span>WHY</span><b>?</b></div>
+          <div class="map-center avatar-mark">
+            <img src="/avatar.jpg" alt="Chen Long holding a cat" width="124" height="124" />
+          </div>
           <div class="map-node node-a"><i></i><span>Reason</span></div>
           <div class="map-node node-b"><i></i><span>Disagree</span></div>
           <div class="map-node node-c"><i></i><span>Organize</span></div>
