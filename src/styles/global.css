@@ -365,28 +365,45 @@ nav a:not(.nav-contact):hover::after {
 }
 
 .map-node {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  width: 0;
+  height: 0;
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  transform: translate(-50%, -50%);
 }
 
 .map-node i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 11px;
   height: 11px;
   border: 3px solid var(--paper);
   border-radius: 50%;
   background: var(--red);
   outline: 1px solid var(--red);
+  transform: translate(-50%, -50%);
 }
 
-.node-a { top: 7%; left: 46%; }
-.node-b { top: 48%; right: 0; }
-.node-c { bottom: 6%; left: 46%; }
-.node-d { top: 48%; left: -2%; flex-direction: row-reverse; }
+.map-node span {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+.node-a { top: 9%; left: 50%; }
+.node-b { top: 50%; left: 91%; }
+.node-c { top: 91%; left: 50%; }
+.node-d { top: 50%; left: 9%; }
+
+.node-d span {
+  right: 18px;
+  left: auto;
+}
 
 .thinking-map > p {
   position: absolute;
