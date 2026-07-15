@@ -351,25 +351,6 @@ nav a:not(.nav-contact):hover::after {
   transform: translate(-50%, -50%);
 }
 
-.map-center.avatar-mark {
-  width: 124px;
-  height: 124px;
-  overflow: hidden;
-  border: 5px solid var(--paper);
-  background: var(--paper-2);
-  box-shadow:
-    0 0 0 1px var(--ink),
-    13px 13px 0 -6px var(--blue);
-}
-
-.avatar-mark img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 25%;
-  transform: scale(1.55);
-}
-
 .map-center span {
   font-family: var(--mono);
   font-size: 9px;
