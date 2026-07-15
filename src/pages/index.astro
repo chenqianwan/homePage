@@ -103,7 +103,11 @@ const experience = [
 ];
 
 const currentYear = new Date().getFullYear();
-const socialImage = new URL("/og.png", Astro.url);
+const assetBase = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const avatarImage = `${assetBase}avatar.jpg`;
+const socialImage = new URL(`${assetBase}og.png`, Astro.url);
 ---
 
 <!doctype html>
@@ -134,7 +138,7 @@ const socialImage = new URL("/og.png", Astro.url);
     <header class="site-header" data-header>
       <a class="wordmark" href="#top" aria-label="Chen Long, home">
         <span class="wordmark-avatar" aria-hidden="true">
-          <img src="/avatar.jpg" alt="" width="42" height="42" />
+          <img src={avatarImage} alt="" width="42" height="42" />
         </span>
         <span class="wordmark-copy">CHEN LONG<br />陈 龙</span>
       </a>

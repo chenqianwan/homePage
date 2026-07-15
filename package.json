@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "SITE_BUILD=1 astro check && SITE_BUILD=1 astro build && node scripts/prepare-sites.mjs",
+    "build:github-pages": "GITHUB_PAGES=1 astro check && GITHUB_PAGES=1 astro build",
     "preview": "astro preview"
   },
   "dependencies": {
