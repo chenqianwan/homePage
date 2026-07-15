@@ -48,6 +48,7 @@ const projects = [
     description:
       "A multi-agent arena where models challenge one another, surface hidden failure modes, and turn adversarial pressure into safer decisions.",
     themes: ["Red teaming", "Deliberation", "Evaluation"],
+    video: "ai-council-demo.mp4",
   },
   {
     code: "DT / 02",
@@ -109,7 +110,6 @@ const assetBase = import.meta.env.BASE_URL.endsWith("/")
   : `${import.meta.env.BASE_URL}/`;
 const avatarImage = `${assetBase}avatar.jpg`;
 const cvFile = `${assetBase}chen-long-cv.pdf`;
-const contractGalaxyVideo = `${assetBase}contract-galaxy-demo.mp4`;
 const socialImage = new URL(`${assetBase}og.png`, Astro.url);
 ---
 
@@ -258,7 +258,7 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
               {project.video && (
                 <video
                   class="project-video"
-                  src={contractGalaxyVideo}
+                  src={`${assetBase}${project.video}`}
                   muted
                   loop
                   playsinline
@@ -278,7 +278,7 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
               {project.video && (
                 <>
                   <span class="project-play-hint" aria-hidden="true">HOVER / FOCUS / TAP TO PLAY ↗</span>
-                  <span class="video-now-playing" aria-hidden="true">CONTRACTGALAXY · PLAYING</span>
+                  <span class="video-now-playing" aria-hidden="true">{project.title.toUpperCase()} · PLAYING</span>
                 </>
               )}
             </article>
