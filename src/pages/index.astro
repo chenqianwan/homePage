@@ -108,6 +108,7 @@ const assetBase = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const avatarImage = `${assetBase}avatar.jpg`;
+const cvFile = `${assetBase}chen-long-cv.pdf`;
 const contractGalaxyVideo = `${assetBase}contract-galaxy-demo.mp4`;
 const socialImage = new URL(`${assetBase}og.png`, Astro.url);
 ---
@@ -152,6 +153,7 @@ const socialImage = new URL(`${assetBase}og.png`, Astro.url);
         <a href="#research">Research</a>
         <a href="#projects">Projects</a>
         <a href="#trajectory">Trajectory</a>
+        <a href={cvFile} download="Chen-Long-CV.pdf" aria-label="Download Chen Long's CV as a PDF">CV ↓</a>
         <a class="nav-contact" href="mailto:lchenew@connect.ust.hk">Let’s talk ↗</a>
       </nav>
     </header>
